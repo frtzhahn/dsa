@@ -133,7 +133,19 @@ public class pos {
 
 		int choice;
 		do {
-			System.out.println(blue + "======= POS CHECKOUT & INVENTORY SYSTEM =======");
+			System.out.println(blue);
+			System.out.println(
+					"                                                           _                                                                     ");
+			System.out.println(
+					" _____ _____ _____        _           _           _      _| |_    _                 _                              _             ");
+			System.out.println(
+					"|  _  |     |   __|   ___| |_ ___ ___| |_ ___ _ _| |_   |   __|  |_|___ _ _ ___ ___| |_ ___ ___ _ _    ___ _ _ ___| |_ ___ _____ ");
+			System.out.println(
+					"|   __|  |  |__   |  |  _|   | -_|  _| '_| . | | |  _|  |   __|  | |   | | | -_|   |  _| . |  _| | |  |_ -| | |_ -|  _| -_|     |");
+			System.out.println(
+					"|__|  |_____|_____|  |___|_|_|___|___|_,_|___|___|_|    |_   _|  |_|_|_|\\_/|___|_|_|_| |___|_| |_  |  |___|_  |___|_| |___|_|_|_|");
+			System.out.println(
+					"                                                          |_|                                  |___|      |___|");
 			System.out
 					.println("1. View Inventory\n2. Add New Product\n3. Delete Product\n4. Checkout / New Transaction\n5. Exit");
 			System.out.print("Choose an option: " + end);
