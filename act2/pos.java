@@ -223,7 +223,7 @@ public class pos {
 		sc.nextLine();
 
 		while (true) {
-			System.out.print("Enter product code to add (or 'done' to finish): " + end);
+			System.out.print(blue + "Enter product code to add (or 'done' to finish): " + end);
 			String input = sc.nextLine().trim();
 
 			if (input.equalsIgnoreCase("done"))
@@ -231,40 +231,76 @@ public class pos {
 
 			Product product = inventory.getProduct(input);
 			if (product == null) {
-				System.out.println("Product not found. Try again.\n");
+				System.out.println(red + "Product not found. Try again.\n" + end);
 				continue;
 			}
 
-			System.out.print("Enter quantity: ");
-			int qty = sc.nextInt();
-			sc.nextLine();
+			// validate quantity and stock inputs
+			int qty = -1;
+			while (true) {
+				System.out.print("Enter quantity: ");
+				if (sc.hasNextInt()) {
+					qty = sc.nextInt();
+					sc.nextLine();
 
-			if (qty <= 0) {
-				System.out.println("Quantity must be greater than 0.\n");
-				continue;
-			}
-
-			if (!inventory.hasStock(input, qty)) {
-				System.out.println("Insufficient stock! Available: " + product.stock + "\n");
-				continue;
+					if (qty <= 0) {
+						System.out.println(red + "Quantity must be greater than 0." + end);
+					} else if (!inventory.hasStock(input, qty)) {
+						// Lock user inside loop if stock is insufficient
+						System.out.println(red + "Insufficient stock! Available: " + product.stock + end);
+					} else {
+						break;
+					}
+				} else {
+					System.out.println(red + "Invalid input! Please enter a valid whole number." + end);
+					sc.next();
+				}
 			}
 
 			checkout.addToCart(product, qty);
 			inventory.reduceStock(input, qty);
-			System.out.println(qty + " x " + product.name + " added to cart.\n");
+			System.out.println(green + qty + " x " + product.name + " added to cart.\n" + end);
 		}
 
 		if (checkout.cart.isEmpty()) {
-			System.out.println("No items in cart. Transaction cancelled.\n");
+			System.out.println(yellow + "No items in cart. Transaction cancelled.\n" + end);
 			return;
 		}
 
-		System.out.print("Is the customer a member (5% discount)? (yes/no): ");
-		boolean isMember = sc.next().equalsIgnoreCase("yes");
+		// validate membership input
+		boolean isMember = false;
+		while (true) {
+			System.out.print("Is the customer a member (5% discount)? (yes/no): ");
+			String memberInput = sc.next().trim().toLowerCase();
+			if (memberInput.equals("yes") || memberInput.equals("y")) {
+				isMember = true;
+				break;
+			} else if (memberInput.equals("no") || memberInput.equals("n")) {
+				isMember = false;
+				break;
+			} else {
+				System.out.println(red + "Invalid input! Please type 'yes' or 'no'." + end);
+			}
+		}
 
 		System.out.printf("TOTAL AMOUNT DUE: P%.2f%n", checkout.getTotal(isMember));
-		System.out.print("Enter cash paid: P");
-		double cashPaid = sc.nextDouble();
+
+		// validate cash paid amount
+		double cashPaid = -1;
+		while (true) {
+			System.out.print("Enter cash paid: P");
+			if (sc.hasNextDouble()) {
+				cashPaid = sc.nextDouble();
+				if (cashPaid >= 0) {
+					break;
+				} else {
+					System.out.println(red + "Payment amount cannot be negative." + end);
+				}
+			} else {
+				System.out.println(red + "Invalid input! Please enter a valid cash amount (e.g., 500.00)." + end);
+				sc.next();
+			}
+		}
 
 		checkout.printReceipt(isMember, cashPaid);
 	}

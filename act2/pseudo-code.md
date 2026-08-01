@@ -72,7 +72,7 @@ DEFINE CLASS Checkout
             PRINT "Insufficient payment! Short by " + ABS(change)
 
 
-// ===================== MAIN CLASS =====================
+// MAIN CLASS
 BEGIN MAIN
     CREATE Inventory inventory
     inventory.addProduct("P001", "Bottled Water", 15.00, 50)
@@ -101,10 +101,33 @@ BEGIN MAIN
     UNTIL choice == 5
 END MAIN
 
-
-// ===================== SUBCLASSES AND OBJECTS =====================
+// sub classes and objects
 FUNCTION addNewProduct(inventory)
-    READ code, name, price, stock FROM user
+    READ code FROM user
+    READ name FROM user
+
+    // Validate Price Input
+    REPEAT
+        READ price FROM user
+        IF price IS A VALID NUMBER AND price >= 0 THEN 
+            BREAK
+        ELSE
+            PRINT "Invalid price! Must be a non-negative number."
+    END REPEAT
+
+// Validate Quantity & Stock Loop
+    REPEAT
+        READ qty FROM user
+        IF qty IS NOT A VALID INTEGER THEN
+            PRINT "Invalid input! Please enter a whole number."
+        ELSE IF qty <= 0 THEN
+            PRINT "Quantity must be greater than 0."
+        ELSE IF NOT inventory.hasStock(input, qty) THEN
+            PRINT "Insufficient stock! Available: " + product.stock
+        ELSE
+            BREAK // Exit quantity loop only when input is valid and stock exists
+        END REPEAT
+
     inventory.addProduct(code, name, price, stock)
     PRINT "Product added successfully!"
 
