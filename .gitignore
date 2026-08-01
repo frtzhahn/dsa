@@ -1,0 +1,38 @@
+# compiled java source
+*.class
+*.jar
+
+
+# ide/editor files
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+.metadata/
+.classpath
+.project
+.settings/
+*.launch
+bin/
+.vscode/
+
+# OS files
+# Linux
+.directory
+.Trash-*/
+*~
+vgcore.*
+core
+.*.swp
+.*.swo
+\#*\#
+.#*
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
