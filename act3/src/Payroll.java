@@ -6,7 +6,6 @@ public class Payroll {
 	public static final BigDecimal MINUTES_PER_HOUR = new BigDecimal("60");
 	public static final BigDecimal OT_RATE_MULTIPLIER = new BigDecimal("1.25");
 
-	// Fixed statutory rates applied against Gross Earnings
 	public static final BigDecimal SSS_RATE = new BigDecimal("0.035"); // 3.5%
 	public static final BigDecimal PHILHEALTH_RATE = new BigDecimal("0.020"); // 2.0%
 	public static final BigDecimal PAGIBIG_RATE = new BigDecimal("0.012"); // 1.2%
@@ -32,7 +31,6 @@ public class Payroll {
 	public Payroll(Employee employee) {
 		this.employee = employee;
 
-		// 1. Rate Conversions
 		this.hourlyRate = employee.getDailyRate()
 				.divide(WORK_HOURS_PER_DAY, 4, RoundingMode.HALF_UP);
 
@@ -43,7 +41,6 @@ public class Payroll {
 				.multiply(OT_RATE_MULTIPLIER)
 				.setScale(4, RoundingMode.HALF_UP);
 
-		// 2. Earnings
 		this.basicEarnings = employee.getDaysWorked()
 				.multiply(employee.getDailyRate())
 				.setScale(2, RoundingMode.HALF_UP);
@@ -54,17 +51,14 @@ public class Payroll {
 
 		this.grossEarnings = this.basicEarnings.add(this.overtimePay);
 
-		// 3. Separate Statutory Deductions (based on Gross)
 		this.sssDeduction = grossEarnings.multiply(SSS_RATE).setScale(2, RoundingMode.HALF_UP);
 		this.philHealthDeduction = grossEarnings.multiply(PHILHEALTH_RATE).setScale(2, RoundingMode.HALF_UP);
 		this.pagIbigDeduction = grossEarnings.multiply(PAGIBIG_RATE).setScale(2, RoundingMode.HALF_UP);
 
-		// 4. Dynamic Undertime Penalty
 		this.undertimePenalty = employee.getUndertimeMinutes()
 				.multiply(this.minuteRate)
 				.setScale(2, RoundingMode.HALF_UP);
 
-		// 5. Total Deductions & Net Pay
 		this.totalDeductions = sssDeduction
 				.add(philHealthDeduction)
 				.add(pagIbigDeduction)

@@ -20,26 +20,22 @@ public class Main {
 			Employee emp = promptEmployeeData(input);
 			Payroll payroll = new Payroll(emp);
 
-			// Directly prints payslip receipt without confirmation step
 			Payslip.printPayslip(payroll);
 
 			keepRunning = input.readYesNo("\nCompute another payslip? [y/n]: ");
 			System.out.println();
 		}
 
-		// Plain text exit message
 		System.out.println("Thank you for using Mocha & Latte's Cafe Payroll System!");
 	}
 
 	private static Employee promptEmployeeData(Console input) {
 		System.out.println("=== WEEKLY PAYROLL INPUTS ===");
 
-		// [1/5] Displayed default: Mocha Matcha Lover
 		String name = input.readStringWithDefault(
 				"[1/5] Employee Name",
 				"Mocha Matcha Lover");
 
-		// [2/5 - 5/5] No defaults displayed
 		BigDecimal dailyRate = input.readBigDecimalNoDefault(
 				"[2/5] Daily Wage Rate (₱)",
 				new BigDecimal("1.00"),

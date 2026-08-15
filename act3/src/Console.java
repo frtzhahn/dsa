@@ -14,7 +14,6 @@ public class Console {
 		this.scanner = scanner;
 	}
 
-	// Input 1: Supports default value display
 	public String readStringWithDefault(String stepLabel, String defaultVal) {
 		System.out.printf("%s%s%s [%sDefault: %s%s] › ",
 				GREEN, stepLabel, RESET,
@@ -31,7 +30,6 @@ public class Console {
 		}
 	}
 
-	// Inputs 2-5: Pure prompt without default display
 	public BigDecimal readBigDecimalNoDefault(String stepLabel, BigDecimal min, BigDecimal max) {
 		System.out.printf("%s%s%s › ", GREEN, stepLabel, RESET);
 
