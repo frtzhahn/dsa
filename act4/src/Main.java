@@ -17,7 +17,7 @@ public class Main {
 
 		while (running) {
 			printMenu();
-			int choice = getValidInteger(YELLOW + "Choose an option (1-5): " + RESET, 1, 5);
+			int choice = getValidInteger(YELLOW + "Choose an option (1-6): " + RESET, 1, 6);
 
 			switch (choice) {
 				case 1:
@@ -35,6 +35,9 @@ public class Main {
 					handleDelete();
 					break;
 				case 5:
+					clearScreen();
+					break;
+				case 6:
 					manager.saveToFile();
 					running = false;
 					break;
@@ -60,7 +63,7 @@ public class Main {
 
 	// main menu
 	private static void printMenu() {
-		System.out.println(CYAN + """
+		System.out.println("\n" + CYAN + """
 				░█▄█░█▀█░█▀▀░█░█░█▀█░▀░█▀▀░░░█▀▀░█░█░█▀█░█▀█░░░▀█▀░█▀█░█░█░█▀▀░█▀█░▀█▀░█▀█░█▀▄░█░█
 				░█░█░█░█░█░░░█▀█░█▀█░░░▀▀█░░░▀▀█░█▀█░█░█░█▀▀░░░░█░░█░█░▀▄▀░█▀▀░█░█░░█░░█░█░█▀▄░░█░
 				░▀░▀░▀▀▀░▀▀▀░▀░▀░▀░▀░░░▀▀▀░░░▀▀▀░▀░▀░▀▀▀░▀░░░░░▀▀▀░▀░▀░░▀░░▀▀▀░▀░▀░░▀░░▀▀▀░▀░▀░░▀░
@@ -69,7 +72,8 @@ public class Main {
 		System.out.println("2. Add New Record");
 		System.out.println("3. Update a Record");
 		System.out.println("4. Delete a Record");
-		System.out.println("5. Save & Exit");
+		System.out.println("5. Clear Console");
+		System.out.println("6. Save & Exit");
 	}
 
 	// add record
